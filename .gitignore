@@ -1,0 +1,8 @@
+
+# Carthage
+Carthage/Checkout
+Carthage/Build 
+
+# IntelliJ Editor
+.idea/
+/upload_dsym_results
