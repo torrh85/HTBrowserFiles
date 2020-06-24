@@ -17,7 +17,6 @@ struct DownloadAPIFolder: DownloaderContentFolderController {
     
     func listFolder(completion: @escaping ((Result<[File], DropboxError>) -> Void)) {
         guard let authorizedClient = DropboxClientsManager.authorizedClient else { completion(.failure(.unableToDownload)); return }
-        
         authorizedClient.files.listFolder(path: path).response { response, error in
             guard error == nil else { completion(.failure(.unableToDownload)); return }
             guard let result = response else { completion(.failure(.unableToDownload)); return }

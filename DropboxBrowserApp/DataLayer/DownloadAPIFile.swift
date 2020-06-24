@@ -17,8 +17,7 @@ struct DownloadAPIFile: DownloaderFilesController {
     
     func downloadContent(completion: @escaping ((Result<Data, DropboxError>) -> Void)) {
         guard let authorizedClient = DropboxClientsManager.authorizedClient else { return completion(.failure(.unableToDownload)) }
-        
-            authorizedClient.files.download(path: path).response(completionHandler: { response, error in
+        authorizedClient.files.download(path: path).response(completionHandler: { response, error in
             if let (_, data) = response {
                 completion(.success(data))
             } else {

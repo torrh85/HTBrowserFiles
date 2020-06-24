@@ -17,14 +17,14 @@ class FileListView: BaseView {
     public var files = PublishSubject<[File]>()
     
     private let disposeBag = DisposeBag()
-
+    
     let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
         tableView.register(FileCell.self, forCellReuseIdentifier: "CustomCell")
-
+        
         return tableView
     }()
-
+    
     init(frame: CGRect = .zero, viewModel: FileListViewModel) {
         self.viewModel = viewModel
         super.init(frame: frame)
@@ -35,15 +35,6 @@ class FileListView: BaseView {
         selectedBinding()
     }
     
-    let destination: (URL, HTTPURLResponse) -> URL = { temporaryURL, response in
-           let fileManager = FileManager.default
-           let directoryURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
-           let UUID = Foundation.UUID().uuidString
-           let pathComponent = "\(UUID)-\(response.suggestedFilename!)"
-           
-           return directoryURL.appendingPathComponent(pathComponent)
-       }
-
     override func layoutSubviews() {
         super.layoutSubviews()
         tableView.frame = bounds

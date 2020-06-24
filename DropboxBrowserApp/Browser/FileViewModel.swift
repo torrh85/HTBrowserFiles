@@ -16,7 +16,7 @@ struct FileViewModel {
     func downloadThumbnail(file: File) {
         DownloadAPIThumbnail.init(format: .png, size: .w64h64, path: file.pathLower ?? "").downloadContent { result in
             switch result {
-            case .success(let data): DispatchQueue.main.async { self.image.accept(UIImage(data: data)) }; print("Good")
+            case .success(let data): DispatchQueue.main.async { self.image.accept(UIImage(data: data))};
             case .failure(let error): print("\(error.localizedDescription). \(#file) \(#line)")
             }
         }
