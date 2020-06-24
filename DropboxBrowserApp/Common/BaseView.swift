@@ -15,9 +15,9 @@ class BaseView: UIView {
     }
 
     @available(*, unavailable,
-      message: "Loading this view from a nib is unsupported in favor of initializer dependency injection."
+      message: "Loading view from a nib is unsupported"
     )
     public required init?(coder aDecoder: NSCoder) {
-      fatalError("Loading this view from a nib is unsupported in favor of initializer dependency injection.")
+      fatalError("Loading view from a nib is unsupported")
     }
 }

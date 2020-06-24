@@ -20,7 +20,7 @@ class FileListView: BaseView {
 
     let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .plain)
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "Cell")
+        tableView.register(FileCell.self, forCellReuseIdentifier: "CustomCell")
 
         return tableView
     }()
@@ -50,21 +50,8 @@ class FileListView: BaseView {
     }
     
     func setupBinding() {
-        self.viewModel.files.bind(to: tableView.rx.items(cellIdentifier: "Cell")) { index, file, cell in
-            cell.textLabel?.text = file.name
-            if file.isFolder {
-                cell.imageView?.image = UIImage(imageLiteralResourceName: "folder")
-            } else if file.name.hasSuffix(".png") {
-                DownloadAPIThumbnail(format: .png, size: .w64h64, destination: self.destination, path: file.pathLower ?? "").downloadContent { result in
-                    DispatchQueue.main.async {
-                        switch result {
-                        case .success(let data): cell.imageView?.image = UIImage(data: data)
-                        case .failure(let error): print("\(error.localizedDescription). \(#file) \(#line)")
-                        }
-                    }
-                }
-            }
-            
+        viewModel.files.asObservable().bind(to: self.tableView.rx.items(cellIdentifier: "CustomCell", cellType: FileCell.self)) { index, model, cell in
+            cell.setupCell(model: model)
         }.disposed(by: disposeBag)
     }
     

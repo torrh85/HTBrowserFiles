@@ -8,6 +8,7 @@
 
 import SwiftyDropbox
 import RxSwift
+import RxRelay
 
 struct FileListViewModel {
     let title = "Files"
@@ -19,12 +20,12 @@ struct FileListViewModel {
         self.viewDelegate = viewDelegate
     }
     
-    public let files: PublishSubject<[File]> = PublishSubject()
+    public let files: BehaviorRelay<[File]> = BehaviorRelay(value: [])
     
     func fetchRootFolder(to path: String?) {
         DownloadAPIFolder(path: path ?? "").listFolder { result in
             switch result {
-            case .success(let files): self.files.onNext(files)
+            case .success(let files): self.files.accept(files)
             case .failure(let error): print("\(error.localizedDescription). \(#file) \(#line)")
             }
         }

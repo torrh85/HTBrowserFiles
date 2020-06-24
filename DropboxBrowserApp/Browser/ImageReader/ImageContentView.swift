@@ -17,6 +17,9 @@ class ImageContentView: BaseView {
     let imageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = .scaleAspectFit
+        imageView.clipsToBounds = true
+        
         return imageView
     }()
     
@@ -29,7 +32,7 @@ class ImageContentView: BaseView {
         setupImageView()
         subscribe(to: viewModel.image)
     }
-
+    
     func subscribe(to observable: Observable<Data>) {
         observable.subscribe { [weak self] path in
             guard let strongSelf = self else { return }
@@ -42,8 +45,9 @@ class ImageContentView: BaseView {
         self.addSubview(imageView)
         
         NSLayoutConstraint.activate(
-            [imageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-             imageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-             imageView.heightAnchor.constraint(equalToConstant: 150)])
+            [imageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 50),
+             imageView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 12),
+             imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
+             imageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 12)])
     }
 }

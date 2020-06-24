@@ -12,6 +12,9 @@ class MainView: BaseView {
     private let viewModel: MainViewModel
     private let scrollView: UIScrollView = UIScrollView()
     
+    static let screenWidth:CGFloat = UIScreen.main.bounds.width
+    static let screenHeight:CGFloat = UIScreen.main.bounds.height
+    
     private enum Constants {
         static let signInButtonHeight: CGFloat = 60.0
     }
@@ -22,6 +25,7 @@ class MainView: BaseView {
         button.setTitle("", for: .disabled)
         button.titleLabel?.font = .boldSystemFont(ofSize: 18)
         button.backgroundColor = .blue
+        
         return button
     }()
     
@@ -54,12 +58,13 @@ class MainView: BaseView {
         scrollView.addSubview(signInButton)
         
         NSLayoutConstraint.activate(
-            [signInButton.centerYAnchor.constraint(equalTo: scrollView.centerYAnchor),
-             signInButton.centerXAnchor.constraint(equalTo: scrollView.centerXAnchor),
-             signInButton.heightAnchor.constraint(equalToConstant: Constants.signInButtonHeight)])
+            [signInButton.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+             signInButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 12),
+             signInButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -12),
+             signInButton.heightAnchor.constraint(equalToConstant: Constants.signInButtonHeight),
+             signInButton.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width)])
         
         signInButton.addTarget(self, action: #selector(signUp), for: .touchUpInside)
-        
     }
     
     @objc func signUp(){

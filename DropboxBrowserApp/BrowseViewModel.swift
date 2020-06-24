@@ -33,7 +33,7 @@ extension BrowseViewModel: PresentableViewDelegate {
             viewSubject.onNext(.imageView(file: file))
         } else if file.name.hasSuffix(".pdf") {
             viewSubject.onNext(.pdfView(file: file))
-        } else {
+        } else if file.isFolder {
             viewSubject.onNext(.listView(file: file))
         }
     }

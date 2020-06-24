@@ -19,15 +19,6 @@ struct ImageViewModel {
     
     private let viewSubject = BehaviorSubject<Data>(value: Data())
     
-    let destination: (URL, HTTPURLResponse) -> URL = { temporaryURL, response in
-        let fileManager = FileManager.default
-        let directoryURL = fileManager.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        let UUID = Foundation.UUID().uuidString
-        let pathComponent = "\(UUID)-\(response.suggestedFilename!)"
-        
-        return directoryURL.appendingPathComponent(pathComponent)
-    }
-    
     func fetchImage() {
         DownloadAPIFile(path: file.pathLower ?? "").downloadContent { result in
             switch result {

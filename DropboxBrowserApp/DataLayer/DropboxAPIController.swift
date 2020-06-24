@@ -22,7 +22,6 @@ public protocol DownloaderFilesController {
 public protocol DownloaderThumbnailController: DownloaderFilesController {
     var format: SwiftyDropbox.Files.ThumbnailFormat { get }
     var size: SwiftyDropbox.Files.ThumbnailSize { get }
-    var destination: Destination { get }
 }
 
 public protocol DownloaderContentFolderController {
